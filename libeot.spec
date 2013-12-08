@@ -5,14 +5,12 @@
 Summary:	Library for parsing and converting Embedded OpenType files
 Summary(pl.UTF-8):	Biblioteka do analizy i konwersji plików Embedded OpenType
 Name:		libeot
-# version fron AC_INIT()
 Version:	0.01
-# git snapshot date
-Release:	0.20131006.1
+Release:	1
 License:	MPL v2.0
 Group:		Libraries
-Source0:	http://dev-www.libreoffice.org/src/%{name}.tar.bz2
-# Source0-md5:	4c3fdbae53f3c155af94d6df0b6e12b6
+Source0:	http://dev-www.libreoffice.org/src/%{name}-%{version}.tar.bz2
+# Source0-md5:	aa24f5dd2a2992f4a116aa72af817548
 URL:		https://github.com/umanwizard/libeot
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -54,12 +52,9 @@ Static libeot library.
 Statyczna biblioteka libeot.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 
 %build
-# restore deleted required files
-unset GIT_DIR GIT_WORK_TREE
-git checkout Makefile.am configure.ac
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
@@ -75,9 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# fix public header braindamage
-%{__sed} -i -e 's,\.\./src/,,' $RPM_BUILD_ROOT%{_includedir}/libeot/libeot.h
-cp -p src/{EOT,EOTError}.h $RPM_BUILD_ROOT%{_includedir}/libeot
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libeot.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -95,8 +88,8 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libeot.so
-%{_libdir}/libeot.la
 %{_includedir}/libeot
+%{_pkgconfigdir}/libeot.pc
 
 %if %{with static_libs}
 %files static

@@ -6,7 +6,7 @@ Summary:	Library for parsing and converting Embedded OpenType files
 Summary(pl.UTF-8):	Biblioteka do analizy i konwersji plików Embedded OpenType
 Name:		libeot
 Version:	0.01
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		Libraries
 Source0:	http://dev-www.libreoffice.org/src/%{name}-%{version}.tar.bz2
